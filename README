@@ -1,3 +1,27 @@
+http://idobatter.github.com/wxReversePolishNotation/
+
 wxReversePolishNotation
 
-http://idobatter.github.com/wxReversePolishNotation/
+$ python setup.py py2exe
+
+参照: 放送大学講座 2008 年 コンピュータのしくみ 岡部洋一
+逆ポーランド記法電卓 状態遷移図
+0 除算ノーチェック
+
+・phase = 0
+  ・キーボードチェックを繰り返す
+    ・数字キー, phase == 0   / phase = 1, Rz = Ry, Ry = Rx (push), Rx = 数字
+    ・数字キー, phase == 1 d / Rx = Rx * 10 +(-) 数字
+    ・数字キー, phase == 1 h / Rx = Rx * 16 +(-) 数字
+    ・Enterキー              / phase = 0 ※push バグ修正 数字キー phase 0 へ
+    ・演算キー               / phase = 0, Rx = Rx @ Ry, Ry = Rz (pop)
+    ・(-) キー               / phase = 0, Rx = - Rx
+    ・AC キー                / phase = 0, Rx = 0, Ry = 0, Rz = 0, ...
+    ・C キー                 / phase = 0, Rx = 0
+  ・繰り返し
+
+ C D E F hd
+ B 7 8 9 /
+ A 4 5 6 x
+ac 1 2 3 -
+ c 0 . e +
